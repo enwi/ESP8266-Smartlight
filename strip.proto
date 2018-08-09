@@ -1,0 +1,26 @@
+syntax = "proto2";
+
+
+message Strip
+{
+    message Led
+    {
+        required int32 num = 1;     // interestingly setting this to fixed32 makes the packet size explode
+        required fixed32 rgbw = 2;
+    }
+    message Whole_Strip
+    {
+        required fixed32 rgbw = 1;
+    }
+    enum Animation
+    {
+        NONE = 0;
+        COLORLOOP = 1;
+        COLORFADE = 2;
+    }
+
+    optional int32 brt = 1;
+    optional Whole_Strip whole = 2;
+    repeated Led leds = 3;
+    optional Animation animation = 4 [default = NONE];
+}
