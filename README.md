@@ -39,3 +39,6 @@ Keep in mind that these can vary, if you use a different ESP, so make sure to us
 ## Compiling the UDP sender application
 Open a terminal and go inside the 'sender' folder `cd sender`.
 Then create a new folder for the binary files `mkdir bin`. Change to that folder `cd bin` and run CMake `cmake ..`. After that compile with `make`. Then you should find a file called sender which you can execute with `./sender`. To change the ip to send data to modify the source code of `sender/main.cpp`.
+
+# Credits
+Petteri Aimonen [nanopb](https://github.com/nanopb/nanopb)
