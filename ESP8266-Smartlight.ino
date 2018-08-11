@@ -33,33 +33,33 @@ int8_t button_clicks = 0;
 /**** Internal states ****/
 enum LightState
 {
-  OFF,
-  WHITE,
-  COLOR,
-  CONTROLLED
+  OFF,        // light is turned off
+  WHITE,      // light is turned on and in white mode
+  COLOR,      // light is turned on and in color mode
+  CONTROLLED  // light is turned on and controlled over UDP
 };
-bool light_color_changed = false;
-Color light_color = Color::RGBW{0.0, 0.0, 0.0, 1.0};
-volatile LightState last_state = LightState::OFF;
-volatile LightState state = LightState::OFF;
-LightState save_state = LightState::OFF;
-const uint8_t MAX_BRT = 255;
-const uint8_t MIN_BRT = 10;
-uint8_t brt = 20;
-volatile uint8_t last_brt = 20;
-bool brt_dir_changed = false;
-bool brt_dir = true;
+volatile LightState last_state = LightState::OFF;     // when light state changes this keeps track of the last state
+volatile LightState state = LightState::OFF;          // current light state
+LightState save_state = LightState::OFF;              // this light state is used during power on
 
 /**** fader ****/
 uint32_t current_time = 0;
 
 // brightness control
-const uint32_t BRT_FADE_DELAY = 10; // Time in milliseconds between fade steps
-uint32_t adjust_brt_fader_time = 0;  // Time to adjust the fader
+const uint32_t BRT_FADE_DELAY = 10;   // Time in milliseconds between fade steps
+uint32_t adjust_brt_fader_time = 0;   // Time to adjust the fader
+const uint8_t MAX_BRT = 255;          // the maximum settable brightness by user (only button)
+const uint8_t MIN_BRT = 10;           // the minimum settable rightness by user (only button)
+uint8_t brt = 20;                     // current brightness
+volatile uint8_t last_brt = 20;       // last brightness to keep track of changes
+bool brt_dir_changed = false;         // flag to indicate that direction of brightness change should be inversed
+bool brt_dir = true;                  // current direction of brightness fade
 
 // color control
-const uint32_t COL_FADE_DELAY =  5; // Time in milliseconds between fade steps
-uint32_t adjust_col_fader_time = 0;  // Time to adjust the fader
+const uint32_t COL_FADE_DELAY =  5;   // Time in milliseconds between fade steps
+uint32_t adjust_col_fader_time = 0;   // Time to adjust the fader
+bool light_color_changed = false;     // flag to indicate that the light color has changed, so the strip can be updated
+Color light_color = Color::RGBW{0.0, 0.0, 0.0, 1.0};  // the current light color
 
 void setup()
 {
@@ -120,11 +120,7 @@ void setup()
   ledstrip.init(NUM_LEDS);
   ledstrip.setBrightness(0);
   ledstrip.show(pixels);
-  for(uint8_t led = 0; led < NUM_LEDS; ++led)
-  {
-    pixels[led] = {0,0,0,255};
-  }
-  //rainbow(ledstrip);
+  fillPixels(pixels, light_color);
 }
 
 void loop()
