@@ -10,7 +10,6 @@ set(miner_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../Color.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RemoteRGBWStrip.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/RemoteRGBWStrip2.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../pb_encode.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../pb_decode.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../pb_common.c
