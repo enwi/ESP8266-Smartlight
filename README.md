@@ -42,3 +42,6 @@ Then create a new folder for the binary files `mkdir bin`. Change to that folder
 
 # Credits
 Petteri Aimonen [nanopb](https://github.com/nanopb/nanopb)
+
+# Support
+If you want to support my work you can store on Amazon via this link: [Amazon Referral Link](https://www.amazon.de/?tag=enwi-21). This is an affiliate link. Through a purchase via this link, I will participate in the turnover. This has no effect on the price for you.
